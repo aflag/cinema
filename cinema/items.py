@@ -5,7 +5,14 @@
 
 from scrapy.item import Item, Field
 
-class CinemaItem(Item):
-    # define the fields for your item here like:
-    # name = Field()
-    pass
+
+class Movie(Item):
+    title = Field()
+    url = Field()
+    desc = Field()
+    dirctor = Field()
+    image = Field()
+    theater = Field()
+    room = Field()
+    room_type = Field()
+    sessions = Field()
