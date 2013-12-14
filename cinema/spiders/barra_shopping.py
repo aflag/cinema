@@ -26,7 +26,7 @@ class BarraShoppingSpider(BaseSpider):
         sel = Selector(response)
         movie = Movie()
         room = int(self._extract(sel, '//*[@id="cinema-info"]/div[1]/p/text()').split()[1].strip())
-        movie['theater'] = 'barra shopping'
+        movie['theater'] = self.name
         movie['room'] = str(room)
         if room in [8, 9]:
             movie['room_type'] = constants.ROOM_TYPE['vip']

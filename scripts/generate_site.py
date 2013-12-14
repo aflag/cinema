@@ -25,21 +25,34 @@ TEMPLATE = u"""<!DOCTYPE html>
       border-top: 1px solid #555;
       padding-top: 40px;
     }
+    h1 {
+      font-size: 50px;
+    }
+    h2 {
+      font-size: 45px;
+      color: #777;
+      margin-top: 80px;
+    }
   </style>
 </head>
 <body>
-  <h1>Cinemas da Barra</h1>
   {% if delux %}
-    <h2>Salas luxosas</h2>
+    <h1>Cinemas da Barra</h1>
+    <h2>Salas Luxosas</h2>
     <ul>
       {% for movie in delux %}
         <li>
-          {% if movie.image %}
-            <img src="{{ movie.image }}" height="120px" />
-          {% endif %}
           <dl>
             {% if movie.title %}
-              <dt>Nome</dt><dd><a href="{{ movie.url }}">{{ movie.title.title() }}</a></dd>
+              <dt>Nome</dt>
+              <dd>
+                <a href="{{ movie.url }}">
+                  {% if movie.image %}
+                    <img src="{{ movie.image }}" height="120px" />
+                  {% endif %}
+                  {{ movie.title.title() }}
+                </a>
+              </dd>
             {% endif %}
             {% if movie.sessions %}
               <dt>Sessões</dt><dd>{{ movie.sessions }}</dd>
@@ -48,7 +61,7 @@ TEMPLATE = u"""<!DOCTYPE html>
               <dt>Diretor</dt><dd>{{ movie.director }}</dd>
             {% endif %}
             {% if movie.theater %}
-              <dt>Cinema</dt><dd><img height="25" src="{{ movie.theater.replace(' ', '')+'-logo.jpg' }}" /></dd>
+              <dt>Cinema</dt><dd><img height="25" src="{{ movie.theater+'-logo.jpg' }}" /></dd>
             {% endif %}
             {% if movie.desc %}
               <dt>Descrição</dt><dd>{{ movie.desc }}</dd>
@@ -66,12 +79,17 @@ TEMPLATE = u"""<!DOCTYPE html>
     <ul>
       {% for movie in imax %}
         <li>
-          {% if movie.image %}
-            <img src="{{ movie.image }}" height="120px" />
-          {% endif %}
           <dl>
             {% if movie.title %}
-              <dt>Nome</dt><dd><a href="{{ movie.url }}">{{ movie.title.title() }}</a></dd>
+              <dt>Nome</dt>
+              <dd>
+                <a href="{{ movie.url }}">
+                  {% if movie.image %}
+                    <img src="{{ movie.image }}" height="120px" />
+                  {% endif %}
+                  {{ movie.title.title() }}
+                </a>
+              </dd>
             {% endif %}
             {% if movie.sessions %}
               <dt>Sessões</dt><dd>{{ movie.sessions }}</dd>
@@ -93,17 +111,30 @@ TEMPLATE = u"""<!DOCTYPE html>
       {% endfor %}
     </ul>
   {% endif %}
+  {% if alt %}
+    <h2>Salas Alternativas</h2>
+    <ul>
+      {% for movie in alt %}
+        {{ movie.desc }}
+      {% endfor %}
+    </ul>
+  {% endif %}
   {% if regular %}
-    <h2>Salas normais</h2>
+    <h2>Salas Normais</h2>
     <ul>
       {% for movie in regular %}
         <li>
-          {% if movie.image %}
-            <img src="{{ movie.image }}" height="120px" />
-          {% endif %}
           <dl>
             {% if movie.title %}
-              <dt>Nome</dt><dd><a href="{{ movie.url }}">{{ movie.title.title() }}</a></dd>
+              <dt>Nome</dt>
+              <dd>
+                <a href="{{ movie.url }}">
+                  {% if movie.image %}
+                    <img src="{{ movie.image }}" height="120px" />
+                  {% endif %}
+                  {{ movie.title.title() }}
+                </a>
+              </dd>
             {% endif %}
             {% if movie.sessions %}
               <dt>Sessões</dt><dd>{{ movie.sessions }}</dd>
@@ -131,6 +162,7 @@ TEMPLATE = u"""<!DOCTYPE html>
 delux = []
 imax = []
 regular = []
+alt = []
 with open(argv[1]) as f:
     for line in f:
         movie = json.loads(line)
@@ -138,7 +170,9 @@ with open(argv[1]) as f:
             delux.append(movie)
         elif movie['room_type'] == constants.ROOM_TYPE['imax']:
             imax.append(movie)
+        elif movie['room_type'] == constants.ROOM_TYPE['alt']:
+            alt.append(movie)
         else:
             regular.append(movie)
 
-print Environment().from_string(TEMPLATE).render(delux=delux, imax=imax, regular=regular)
+print Environment().from_string(TEMPLATE).render(delux=delux, imax=imax, regular=regular, alt=alt)

@@ -9,7 +9,9 @@ from scrapy.contrib.exporter import JsonLinesItemExporter
 class NormalizePipeline(object):
     def process_item(self, item, spider):
         for key,value in item.items():
-            item[key] = ' '.join(value.lower().split())
+            item[key] = value.strip()
+            if key != 'title':
+                item[key] = ' '.join(value.lower().split())
         return item
 
 
