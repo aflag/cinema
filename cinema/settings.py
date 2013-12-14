@@ -13,3 +13,8 @@ NEWSPIDER_MODULE = 'cinema.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'cinema (+http://www.yourdomain.com)'
+
+ITEM_PIPELINES = {
+    'cinema.pipelines.NormalizePipeline': 250,
+    'cinema.pipelines.CinemaPipeline': 500,
+}

@@ -36,6 +36,10 @@ class BarraShoppingSpider(BaseSpider):
             movie['room_type'] = constants.ROOM_TYPE['regular']
         movie['title'] = self._extract(sel, '//*[@id="cinema"]/div[2]/strong/text()')
         movie['sessions'] = self._extract(sel, '//*[@id="cinema-info"]/div[1]/div[1]/text()')
+        movie['director'] = self._extract(sel, '//*[@id="cinema-info"]/div[1]/div[3]/p/text()[4]')
+        movie['image'] = 'http://www.barrashopping.com.br/' + self._extract(sel, '//*[@id="cinema"]/div[1]/img/@src')
+        movie['desc'] = self._extract(sel, '//*[@id="cinema"]/div[2]/p/text()')
+        movie['url'] = response.url
         return movie
 
     def parse(self, response):

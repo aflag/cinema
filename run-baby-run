@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -e
+
+. env/bin/activate
+
+rm -f data/* result.jsonlines
+
+for spider in `scrapy list`; do
+  scrapy crawl "$spider" &
+done
+wait
+
+cat data/* > result.jsonlines
+python scripts/generate_site.py result.jsonlines > ~/public_html/cine.html
+
+deactivate

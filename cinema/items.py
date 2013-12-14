@@ -10,7 +10,7 @@ class Movie(Item):
     title = Field()
     url = Field()
     desc = Field()
-    dirctor = Field()
+    director = Field()
     image = Field()
     theater = Field()
     room = Field()
