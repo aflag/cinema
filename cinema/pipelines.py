@@ -11,7 +11,7 @@ class NormalizePipeline(object):
         for key,value in item.items():
             item[key] = value.strip()
             if key != 'title':
-                item[key] = ' '.join(value.lower().split()).replace('&amp;', '')
+                item[key] = ' '.join(value.lower().split())
         return item
 
 

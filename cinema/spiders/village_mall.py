@@ -26,7 +26,7 @@ class VillageMallSpider(BaseSpider):
             movie = Movie()
             movie['title'] = self._extract(item, 'div/div/div[%s]/h3/text()' % self._has_class('rightInfo'))
             movie['url'] = response.url
-            movie['desc'] = self._extract(item, 'div/div/div[%s]/div[%s]/p/text()' % (self._has_class('rightInfo'), self._has_class('text')))
+            movie['desc'] = self._extract(item, 'div/div/div[%s]/div[%s]/p/text()' % (self._has_class('rightInfo'), self._has_class('text'))).replace('amp;', '')
             movie['image'] = self._extract(item, 'div/div/div[%s]/img/@src' % self._has_class('leftImage'))
             movie['theater'] = self.name
             movie['sessions'] = self._extract(item, 'div/div/div[%s]/div[%s]/div/p/text()' % (self._has_class('rightInfo'), self._has_class('salas')))
