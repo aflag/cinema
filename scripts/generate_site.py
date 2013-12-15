@@ -2,6 +2,7 @@
 import json
 import os
 import sys
+import datetime
 reload(sys)
 sys.path.append(os.path.dirname(__file__) + '/..')
 sys.setdefaultencoding('utf-8')
@@ -156,6 +157,7 @@ TEMPLATE = u"""<!DOCTYPE html>
       {% endfor %}
     </ul>
   {% endif %}
+  Ultima atualização: {{ data }}
 </body>
 </html>"""
 
@@ -175,4 +177,5 @@ with open(argv[1]) as f:
         else:
             regular.append(movie)
 
-print Environment().from_string(TEMPLATE).render(delux=delux, imax=imax, regular=regular, alt=alt)
+print Environment().from_string(TEMPLATE).render(delux=delux, imax=imax,
+regular=regular, alt=alt, data=datetime.datetime.now().strftime('%x %X'))
