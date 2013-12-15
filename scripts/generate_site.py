@@ -15,8 +15,9 @@ from cinema import constants
 TEMPLATE = u"""<!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>Cinemas da Barra</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=0.7" />
   <style type="text/css">
     ul {
       list-style-type: none;
