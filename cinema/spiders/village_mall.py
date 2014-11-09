@@ -22,7 +22,7 @@ class VillageMallSpider(BaseSpider):
 
     def parse(self, response):
         sel = Selector(response)
-        for item in sel.xpath('//*[@id="cinema"]/article[2]/div/div[%s]' % self._has_class('itemInfo')):
+        for item in sel.xpath('//*[@id="cinema"]/div/div[2]/article/div/div[%s]' % self._has_class('itemInfo')):
             movie = Movie()
             movie['title'] = self._extract(item, 'div/div/div[%s]/h3/text()' % self._has_class('rightInfo'))
             movie['url'] = response.url
